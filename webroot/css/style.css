@@ -1,0 +1,250 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24 sept. 2020, 13:22:17
+    Author     : daw2
+*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}  
+nav{
+    background-color: black;
+    height: 50px;
+    width: 100%;
+}
+
+nav ul{
+    height: 50px;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+}
+
+.desglos{
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+
+nav li{
+    display:inline-block;
+    width:150px;
+    height:50px;
+    background-color:#000;
+    border:1px solid #000;
+    text-align:center;
+    color:#fff;
+    position:relative;
+}
+
+nav a{
+    text-decoration:none;
+    color:inherit;
+    font-size:14px;
+    height: 100%;
+    display: block;
+    padding-top: 13px;
+}
+
+nav li:hover{
+    background-color:#fff;
+    color:#000;
+}
+
+nav li>ul{
+    display:none;
+}
+
+nav li:hover>ul{
+    display:block;
+    position:absolute;
+    top:48px;
+    left:-1px;
+    height: auto;
+    z-index: 1;
+}
+
+.img a{
+    padding:0px;
+}
+
+#cuerpo{
+    height: 100%;
+    width: 80%;
+    margin-left: 10%;
+    position: fixed;
+}
+
+.ico{
+    height: 45px;
+    width: 45px;
+}
+
+#antes{
+    width: 10%;
+    height: 50px;
+    background-color: #54afff;
+    color: #000;
+    border-top: 50px solid transparent;
+    border-left: 50px solid #fff;
+    position: absolute;
+
+}
+
+#autor{
+    width: 80%;
+    height: 50px;
+    background-color: #54afff;
+    color: #000;
+    position: absolute;
+    margin-left: 10%;
+}
+
+#despues{
+    width: 10%;
+    height: 50px;
+    background-color: #54afff;
+    color: #000;
+    border-top: 50px solid transparent;
+    border-right: 50px solid #fff;
+    position: absolute;
+    right: 0px;
+}
+
+#autor h1{
+    font-size: 1.3vw;
+    text-align: center;
+    padding-top: 0.5vw;
+}
+
+#contenido{
+    background-color: #f4f4f4;
+    height: auto;
+    width: 80%;
+    position: absolute;
+    top:100px;
+    margin-left: 10%;
+    margin-bottom: 50px;
+    min-height: 100%;
+}
+
+.casa, .casa2{
+    height: 30px;
+    width: 30px;
+    margin-top: 10px;
+}
+
+.casa2{
+    display: none;
+    z-index: 99;
+    position: absolute;
+}
+
+ul:hover .casa2{
+    display: inline;
+    left: 59px;
+}
+
+.git, .log{
+    position: absolute;
+    right: 0px;
+}
+
+.log{
+    right: 150px;
+}
+
+.practicas{
+    width: 80%;
+    height: 60px;
+    margin-left: 10%;
+    margin-top: 50px; 
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.practicas a, .practicas p{
+    color: black;
+    font-size: 18px;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    padding-left: 15px;
+    position: relative;
+    background-color: #54afff;
+    padding-top: 1vw;
+}
+
+.practicas a{
+    padding: 13px;
+}
+
+.practicas a{
+    width: auto;
+}
+
+.practicas:nth-child(2n) a, .practicas:nth-child(2n) p{
+    background-color:  #fea354;
+}
+
+.despues ,.despues2{
+    height: 50px;
+    background-color: #54afff;
+    color: #000;
+    border-top: 60px solid transparent;
+    border-right: 60px solid #f4f4f4;
+}
+
+.despues2{
+    border-top: 0px solid #1591ff;
+    border-bottom: 60px solid transparent;
+    background-color: #fea354; 
+}
+
+.formulario form div label{
+    font-size: large;
+}
+
+.fText{
+    margin-bottom: 5px;
+    font-size: large;
+}
+
+.error{
+    color: #ff0000;
+}
+
+.good{
+    color:#13D600;
+}
+
+#mostrarTitulo{
+    width: 100%;
+    color: #000;
+    margin-left: 70%;
+    margin-top: 1.4%;
+    position: initial;
+}
+
+#mostrarTitulo p{
+    display: inline-block;
+    margin-left: 2%;
+
+}
+
+.contenedorError{
+    border: 3px solid #54afff;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+h2{
+    text-align: center;
+}
