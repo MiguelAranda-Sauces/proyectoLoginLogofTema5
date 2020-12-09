@@ -39,7 +39,7 @@ CREATE TABLE if NOT EXISTS DAW210DBProyectoTema5.T02_Departamento (
 
 CREATE TABLE IF NOT EXISTS DAW210DBProyectoTema5.T01_Usuario(
         T01_CodUsuario VARCHAR(15) PRIMARY KEY,
-        T01_DescUsuario VARCHAR(25) NOT NULL,
+        T01_DescUsuario VARCHAR(255) NOT NULL,
         T01_Password VARCHAR(64) NOT NULL,
         T01_Perfil enum('administrador', 'usuario') DEFAULT 'usuario',
         T01_FechaHoraUltimaConexion INT,

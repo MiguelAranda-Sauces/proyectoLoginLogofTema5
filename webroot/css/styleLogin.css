@@ -3,49 +3,72 @@
     Author     : Bluewalk
 */
 
-.descript{
-    display: block !important;
-    height: 12.5vw !important;
-}
 
 .botonSend{
-    height: 4vw;
-    width: 15vw !important;
-    margin-left: 40%;
+    top: 20px !important;
 }
+.botonSend a,.botonSend input{
+    top: 0px !important;
 
-label{
-    width: auto !important;
 }
 
 .campos{
-    width: 90% !important;
+    margin-top:25px;
+}
+a {
+    position: absolute !important;
+    padding-top: 2%;
+
+}
+.boton {
+    top: 4vw !important;
+
+}
+@media only screen and (max-height: 600px) {
+    .boton {
+        top: 5vw !important;
+
+    }
+    .campos{
+        margin-top:15x;
+    }
+}
+@media only screen and (max-height: 700px) {
+    .boton {
+        top: 5vw !important;
+
+    }
+    .campos{
+        margin-top:15px;
+    }
+}
+@media only screen and (max-height: 800px) {
+    .boton {
+        top: 5vw !important;
+
+    }
+    .campos{
+        margin-top:15px;
+    }
 }
 
-.error{
-    display: inline-grid;
-    color: red;
+.botonSend a{
+    padding-top: 0.1vw !important;
 }
 
-#form div:nth-of-type(1) input{
-    width: 20vw;
+.botonEnvio{
+    padding: 0px !important;
+    height: 34px !important;
 }
 
-#form div:nth-of-type(2) input{
-    width: 31vw;
-}
-#form div:nth-of-type(3) input{
-    width: 20vw;
+.git{
+    top:0px!important;
 }
 
-#form{
-    min-height: 3vw;
+footer{
+    height: 4vw;
 }
 
-h3{
-    text-align: center;
-    position: relative;
-    top: 0.6vw;
-    color: #54AFFF;
+footer a{
+    padding-top: 1%;
 }
-

@@ -49,19 +49,19 @@ if (isset($_POST['close'])) {
                 $fechaHoraUltimaConexionAnterior = $_SESSION['FechaHoraUltimaConexionAnterior'];
 
 
-                $consultarUsu = "SELECT DescUsuario, NumConexiones FROM Usuario WHERE CodUsuario=:CodUsuario"; //Creamos la consulta mysq
+                $consultarUsu = "SELECT T01_DescUsuario, T01_NumConexiones FROM T01_Usuario WHERE T01_CodUsuario=:CodUsuario"; //Creamos la consulta mysq
                 $datosUsuario = $miDB->prepare($consultarUsu); //Preparamos la consulta
                 $datosUsuario->bindParam(":CodUsuario", $usuarioInsertUsuario);
                 $datosUsuario->execute(); //Ejecutamos la consulta preparada
                 $oUsuario = $datosUsuario->fetchObject(); //creamos el objeto PDO de usuario
                 ?>
                 <div id="datos">
-                    <h3>Welcome <?php echo$oUsuario->DescUsuario; ?></h3>
+                    <h3>Welcome <?php echo$oUsuario->T01_DescUsuario; ?></h3>
                     <?php
-                    if ($oUsuario->NumConexiones == 1) {
+                    if ($oUsuario->T01_NumConexiones == 1) {
                         echo "<h4>It is your first connection. Thank you very much for trusting us.</h4>";
                     } else {
-                        echo "<h4>This is your " . $oUsuario->NumConexiones . " connection.</h4>";
+                        echo "<h4>This is your " . $oUsuario->T01_NumConexiones . " connection.</h4>";
                         echo "<h4>His last connection was " . date('d/m/Y H:i:s', $fechaHoraUltimaConexionAnterior) . ".</h4>";
                     }
                 } catch (PDOException $miExcepcionPDO) {

@@ -1,0 +1,63 @@
+/* 
+    Created on : 18-nov-2020, 21:29:58
+    Author     : Bluewalk
+*/
+
+a {
+    /*top: 1.9vh !important;*/
+}
+
+.botonSend{
+    top: 20px !important;
+}
+.botonSend a,.botonSend input{
+    top: 0px !important;
+
+}
+
+.campos{
+    margin-top:25px;
+    width: 36vw;
+}
+a {
+
+}
+.botonSend a{
+    position: absolute !important;
+}
+
+.botonSend{
+    left: 30%;
+    top: 2% !important;
+}
+
+.botonEnvio{
+    padding: 0px !important;
+    height: 34px !important;
+}
+
+#form .descript{
+    display: grid !important;
+    height: 12.5vw !important;
+    min-height: 41vh;
+}
+
+#form .campos:nth-of-type(2) input{
+    width: 30vw;
+}
+
+.error{
+    display: inherit;
+}
+
+#form{
+    width: 60% !important;
+    left: 20% !important;
+    min-height: 41vh;
+}
+@media only screen and (min-height: 200px) {
+    #form{
+        min-height: 21vw !important;
+    }
+
+}

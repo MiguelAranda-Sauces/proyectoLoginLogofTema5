@@ -4,11 +4,13 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
     header("Location: ../login.php");
     exit;
 }
-if (isset($_REQUEST['idioma']) && $_REQUEST['idioma'] =='eng') {
+
+if (isset($_REQUEST['idiomac']) && $_REQUEST['idiomac'] =='eng') {
     setcookie('idioma', 'eng');
     header("Location: programaEng.php");
     exit;
 }
+
 if ($_COOKIE['idioma'] == 'eng') {
     header("Location: programaEng.php");
     exit;
@@ -49,19 +51,19 @@ if (isset($_POST['close'])) {
                 $fechaHoraUltimaConexionAnterior = $_SESSION['FechaHoraUltimaConexionAnterior'];
 
 
-                $consultarUsu = "SELECT DescUsuario, NumConexiones FROM Usuario WHERE CodUsuario=:CodUsuario"; //Creamos la consulta mysq
+                $consultarUsu = "SELECT T01_DescUsuario, T01_NumConexiones FROM T01_Usuario WHERE T01_CodUsuario=:CodUsuario"; //Creamos la consulta mysq
                 $datosUsuario = $miDB->prepare($consultarUsu); //Preparamos la consulta
                 $datosUsuario->bindParam(":CodUsuario", $usuarioInsertUsuario);
                 $datosUsuario->execute(); //Ejecutamos la consulta preparada
                 $oUsuario = $datosUsuario->fetchObject(); //creamos el objeto PDO de usuario
                 ?>
                 <div id="datos">
-                    <h3>Bienvenido/a <?php echo$oUsuario->DescUsuario; ?></h3>
+                    <h3>Bienvenido/a <?php echo $oUsuario->T01_DescUsuario; ?></h3>
                     <?php
-                    if ($oUsuario->NumConexiones == 1) {
+                    if ($oUsuario->T01_NumConexiones == 1) {
                         echo "<h4>Es su primera conexión. Muchas gracias por confiar en nosotros.</h4>";
                     } else {
-                        echo "<h4>Esta es su " . $oUsuario->NumConexiones . " conexión.</h4>";
+                        echo "<h4>Esta es su " . $oUsuario->T01_NumConexiones . " conexión.</h4>";
                         echo "<h4>Su ultima conexión fue el " . date('d/m/Y H:i:s', $fechaHoraUltimaConexionAnterior) . ".</h4>";
                     }
                 } catch (PDOException $miExcepcionPDO) {
@@ -77,8 +79,8 @@ if (isset($_POST['close'])) {
                 ?>
                 <div id="idiomas">
                     <form  name="setIdioma" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                        <label for="idioma">Idioma</label>
-                        <select id="idioma" name="idioma" onchange="this.form.submit()">             
+                        <label for="idiomac">Idioma</label>
+                        <select id="idiomac" name="idiomac" onchange="this.form.submit()">             
                             <option value="esp" <?php echo ($_COOKIE['idioma']) == 'esp' ? 'selected' : '' ?>>Castellano</option>
                             <option value="eng" <?php echo ($_COOKIE['idioma']) == 'eng' ? 'selected' : '' ?>>Ingles</option>
                         </select>
@@ -92,6 +94,7 @@ if (isset($_POST['close'])) {
                     </form>
                     <a href="../../proyectoTema5.html"><button class="botonEnvio">Volver</button></a>
                     <a href="detalles.php"><button class="botonEnvio">Detalles Servidor</button></a>
+                    <a href="editarPerfil.php"><button class="botonEnvio">Editar Perfil</button></a>
                 </div>    
             </div>
         </div>

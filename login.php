@@ -5,9 +5,9 @@
  * @since 29/11/2020 1.0:
  */
 session_start();
-if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
+if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se logeo anteriormente lo dirigimos al programa
 
-    require_once '../core/201109libreriaValidacion.php'; //incluimos la libreria de validación
+    require_once 'core/201130libreriaValidacion.php'; //incluimos la libreria de validación
 
     define("OBLIGATORIO", 1); //definimos e inicializamos la constante obligatorio a 1
 
@@ -21,11 +21,10 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
         "usuario" => null,
         "password" => null
     ];
-
     if (isset($_REQUEST["entrar"])) {
         require_once "../config/conexionBDPDO.php"; //incluimos la conexión a la BD
-        $aError["usuario"] = validacionFormularios::comprobarAlfabetico($_REQUEST["usuario"], 20, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo textfieldObligatorio siendo este alfabetico
-        //$aError["password"] = validacionFormularios::validarPassword($_REQUEST["password"], 20, 3, OBLIGATORIO); //Validamos la entrada del formulario para el campo password siendo este alfabetico de tamaño max 50 minimo 3
+        $aError["usuario"] = validacionFormularios::comprobarAlfabetico($_REQUEST["usuario"], 15, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo textfieldObligatorio siendo este alfabetico
+        $aError['password'] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 1, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo password siendo este alfabetico de tamaño max 8 minimo 1
 
         try {
             $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION);
@@ -33,7 +32,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
             $usuarioInsertUsuario = $_REQUEST["usuario"];
             $passInsertUsuario = $_REQUEST["password"];
 
-            $consultarLogging = "SELECT CodUsuario, Password, FechaHoraUltimaConexion FROM Usuario WHERE CodUsuario=:CodUsuario"; //Creamos la consulta mysq
+            $consultarLogging = "SELECT T01_CodUsuario, T01_Password, T01_FechaHoraUltimaConexion FROM T01_Usuario WHERE T01_CodUsuario=:CodUsuario"; //Creamos la consulta mysq
 
             $consultaLogin = $miDB->prepare($consultarLogging); //Preparamos la consulta
             $consultaLogin->bindParam(":CodUsuario", $usuarioInsertUsuario); //Declaramos el parametro bind
@@ -41,14 +40,18 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
             $consultaLogin->execute(); //Ejecutamos la consulta preparada
             $oUsuario = $consultaLogin->fetchObject(); //creamos el objeto PDO de usuario
             if ($consultaLogin->rowCount() == 1) {
-                if ($oUsuario->CodUsuario == $usuarioInsertUsuario && $oUsuario->Password == hash("sha256", $usuarioInsertUsuario.$passInsertUsuario)) {//concatenamos el usuario y la password
+                if ($oUsuario->T01_CodUsuario == $usuarioInsertUsuario && $oUsuario->T01_Password == hash("sha256", $usuarioInsertUsuario . $passInsertUsuario)) {//concatenamos el usuario y la password
                     $_SESSION['usuarioDAW210DBProyectoTema5'] = $usuarioInsertUsuario; //asignamos el valor del usuario al objero de session
-                    $_SESSION['FechaHoraUltimaConexionAnterior'] = $oUsuario->FechaHoraUltimaConexion;
-                    setcookie('idioma','esp');
+                    if ($oUsuario->T01_NumConexiones == 0) {
+                        $_SESSION['FechaHoraUltimaConexionAnterior'] = $oUsuario->T01_FechaHoraUltimaConexion;
+                    }
+                    if (!isset($_COOKIE['idioma'])) {
+                        setcookie('idioma', 'esp');
+                    }
                     //Actualizamos la ultima vez que se conecto con timestamp y el número de conexiones que ha echo ese usuario
-                    $actualizarLogUsu = "UPDATE Usuario SET FechaHoraUltimaConexion =" . time() . ",NumConexiones =NumConexiones + 1 WHERE CodUsuario=:CodUsuario"; //Creamos la consulta mysq
+                    $actualizarLogUsu = "UPDATE T01_Usuario SET T01_FechaHoraUltimaConexion =" . time() . ",T01_NumConexiones =T01_NumConexiones + 1 WHERE T01_CodUsuario=:CodUsuario"; //Creamos la consulta mysq
                     $updateUsu = $miDB->prepare($actualizarLogUsu); //Preparamos la consulta
-                    $updateUsu->bindParam(":CodUsuario", $oUsuario->CodUsuario); //Declaramos el parametro bind
+                    $updateUsu->bindParam(":CodUsuario", $oUsuario->T01_CodUsuario); //Declaramos el parametro bind
                     $updateUsu->execute(); //Ejecutamos la consulta preparada
                 } else {
                     $aError["usuario"] = "Error de credenciales";
@@ -72,7 +75,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
                 $entradaOK = false; // asignamos el valor a false en caso de que entre
             }
         }
-    } else {//si el usuario no ha pulsado el boton de enviar
+    }else {//si el usuario no ha pulsado el boton de enviar
         $entradaOK = false; //asignamos el valor a false ya que no se a enviado nada.
     }
     if ($entradaOK) {// si el valor es true entra
@@ -86,8 +89,8 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
                 <title>Login Logoff Tema 5</title>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" type="text/css" href="../webroot/css/stylelogin.css">
-                <link rel="stylesheet" type="text/css" href="../webroot/css/style_1.css">
+                <link rel="stylesheet" type="text/css" href="webroot/css/style_1.css">
+                <link rel="stylesheet" type="text/css" href="webroot/css/styleLogin.css">
             </head>
             <body>
                 <div id="cabecera">
@@ -109,12 +112,12 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
                             <div class="campos">
                                 <label class="labelTitle" for="password">Password: </label>
                                 <input  class="inputText" type="password" name="password">
-                                        <?php echo isset($aError["password"]) || isset($aError["usuario"]) ? "<span class='error'>" . "<br>Error de credenciales</span>" : null ?>
+                                <?php echo isset($aError["password"]) || isset($aError["usuario"]) ? "<span class='error'>" . "<br>Error de credenciales</span>" : null ?>
 
                             </div>
                             <div class="botonSend">
-                                <input class="botonEnvio" type= "submit" value= "Entrar" name= "entrar">
-                                <input class = "botonEnvio" type = "submit" value = "Cancelar" name = "volver">
+                                <input class="botonEnvio" type="submit" value="Entrar" name="entrar">
+                                <a class="botonEnvio" href="codigoPHP/registro.php">Registro</a>
                             </div>
                         </form>
 
@@ -134,7 +137,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
         </body>
     </html>
     <?php
-}else{
+} else {
     header("Location: codigoPHP/programa.php"); //redirigimos
 }
 ?>
