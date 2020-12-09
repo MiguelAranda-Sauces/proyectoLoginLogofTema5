@@ -40,14 +40,13 @@ body{
     padding-right: 2%;
     left:60%;
     background-color: #252424;
-
 }
 
 
 .boton,.botonEnvio{
     /*width: 100px;*/
     width: 7vw;
-    height: 2vw;
+    height: 40px;
     display: inline-block;
     text-decoration: none;
     border: 1px solid #fff;
@@ -59,12 +58,10 @@ body{
     background-color: #d0d1d5;
     top: 1vw;
     font-size: 1.3vw;
-
 }
 
 .volver{
     left:20px;
-
 }
 
 #acciones{

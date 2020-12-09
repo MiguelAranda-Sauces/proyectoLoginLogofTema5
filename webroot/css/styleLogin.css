@@ -24,33 +24,7 @@ a {
     top: 4vw !important;
 
 }
-@media only screen and (max-height: 600px) {
-    .boton {
-        top: 5vw !important;
 
-    }
-    .campos{
-        margin-top:15x;
-    }
-}
-@media only screen and (max-height: 700px) {
-    .boton {
-        top: 5vw !important;
-
-    }
-    .campos{
-        margin-top:15px;
-    }
-}
-@media only screen and (max-height: 800px) {
-    .boton {
-        top: 5vw !important;
-
-    }
-    .campos{
-        margin-top:15px;
-    }
-}
 
 .botonSend a{
     padding-top: 0.1vw !important;

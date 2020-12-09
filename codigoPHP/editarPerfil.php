@@ -9,6 +9,12 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
     header("Location: ../login.php");
     exit;
 }
+
+if (isset($_REQUEST['close'])) {
+    session_destroy();
+    header("Location: ../login.php");
+    exit;
+}
 require_once "../config/conexionBDPDO.php"; //incluimos la conexión a la BD
 try {
     $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION); //Creamos el objeto PDO
@@ -63,7 +69,7 @@ if ($entradaOK) {// si el valor es true entra
         $actualizarUsu = $miDB->prepare($sqlUpdate); //Preparamos la consulta
 //bindeamos los campos para la consulta
         $param = [':codUsuario' => $_SESSION['usuarioDAW210DBProyectoTema5'],
-            ':descripcion' => $_REQUEST['descripcion'] 
+            ':descripcion' => $_REQUEST['descripcion']
         ];
         $actualizarUsu->execute($param);
 
@@ -96,6 +102,9 @@ if ($entradaOK) {// si el valor es true entra
                 </div>
                 <div class="nav">
                     <a href="../../../proyectoDWES/indexProyectoDWES.html" class="boton volver"><img class="icoBoton" src="../webroot/img/volver-flecha-izquierda.png"><span class="texto">Volver</span></a>
+                    <form id="close" name="logout" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <button class="botonEnvio" type="submit" name='close' value="Cerrar Sesion" >Cerrar Sesion</button>
+                    </form>
                 </div>
             </div>
             <div id="contenedor"> 
@@ -130,6 +139,7 @@ if ($entradaOK) {// si el valor es true entra
                             <input class="botonEnvio" type= "submit" value="Editar Perfil" name= "edit">
                             <a class="botonEnvio" href="programa.php">Cancelar</a>
                             <a class="botonEnvio" href="cambiarPassword.php">Cambiar Password</a>
+
                         </div>
                     </form>
 
