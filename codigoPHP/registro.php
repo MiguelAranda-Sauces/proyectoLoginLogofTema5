@@ -23,7 +23,7 @@ $aError = [//declaramos y inicializamos el array de los errores de los campos de
 ];
 
 if (isset($_REQUEST["registro"])) {
-    require_once "../config/conexionBDPDO.php"; //incluimos la conexión a la BD
+    require_once "../config/conexionBDPDODesarrollo.php"; //incluimos la conexión a la BD
     $aError["usuario"] = validacionFormularios::comprobarAlfabetico($_REQUEST["usuario"], 15, MINIMO, OBLIGATORIO); //Validamos la entrada del formulario para el campo textfieldObligatorio siendo este alfabetico
     if (($aError["usuario"] == null)) {
         try {
@@ -113,7 +113,7 @@ if ($entradaOK) {// si el valor es true entra
             </div>
             <div id="contenedor"> 
                 <div id="form">
-                    <form class="descript" action= "<?php echo $_SERVER["PHP_SELF"]?>" method= "POST">
+                    <form class="descript" action= "<?php echo $_SERVER["PHP_SELF"] ?>" method= "POST">
                         <div class="campos">
                             <label class="labelTitle" for="usuario">Usuario: </label>
                             <input  class="inputText" type="text" name="usuario" placeholder="Introduzca el nombre del usuario"
@@ -138,6 +138,12 @@ if ($entradaOK) {// si el valor es true entra
                             <input  class="inputText" type="password" name="passwordComprobacion"
                                     value="<?php echo isset($_REQUEST["passwordComprobacion"]) ? $aError["passwordComprobacion"] ? null : $_REQUEST["passwordComprobacion"] : null ?>">
                                     <?php echo isset($aError["passwordComprobacion"]) ? "<span class='error'>" . "<br>" . $aError["passwordComprobacion"] . "</span>" : null ?>
+                        </div>
+                        <div class="campos">
+                            <label class="labelTitle" for="img">Imagen de perfil: </label>
+                            <input  class="inputText" type="file" name="img" 
+                                    value="<?php echo isset($_REQUEST["img"]) ? $aError["img"] ? null : $_REQUEST["img"] : null ?>">
+                                    <?php echo isset($aError["img"]) ? "<span class='error'>" . "<br>" . $aError["img"] . "</span>" : null ?>
                         </div>
                         <div class="botonSend">
                             <input class="botonEnvio" type= "submit" value= "registro" name= "registro">

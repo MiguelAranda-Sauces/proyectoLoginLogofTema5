@@ -5,22 +5,16 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
     exit;
 }
 
-if (isset($_REQUEST['idiomac']) && $_REQUEST['idiomac'] =='eng') {
-    setcookie('idioma', 'eng');
-    header("Location: programaEng.php");
-    exit;
-}
-
-if ($_COOKIE['idioma'] == 'eng') {
-    header("Location: programaEng.php");
-    exit;
-}
-
 if (isset($_POST['close'])) {
     session_destroy();
     header("Location: ../login.php");
     exit;
 }
+$saludo = [
+    "esp" => "Bienvenido",
+    "eng" => "Welcome",
+    "prt" => "bem-vinda",
+];
 ?>
 <!DOCTYPE html>
 
@@ -43,7 +37,7 @@ if (isset($_POST['close'])) {
         </div>
         <div id="contenedor"> 
             <?php
-            require_once "../config/conexionBDPDO.php";
+            require_once "../config/conexionBDPDODesarrollo.php";
             try {
                 $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION);
                 $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -58,7 +52,7 @@ if (isset($_POST['close'])) {
                 $oUsuario = $datosUsuario->fetchObject(); //creamos el objeto PDO de usuario
                 ?>
                 <div id="datos">
-                    <h3>Bienvenido/a <?php echo $oUsuario->T01_DescUsuario; ?></h3>
+                    <h3> <?php echo  $saludo[$_COOKIE['idioma']] ." ". $oUsuario->T01_DescUsuario; ?></h3>
                     <?php
                     if ($oUsuario->T01_NumConexiones == 1) {
                         echo "<h4>Es su primera conexión. Muchas gracias por confiar en nosotros.</h4>";
@@ -76,17 +70,6 @@ if (isset($_POST['close'])) {
                 } finally {
                     unset($miConexion); //cerramos la conexión
                 }
-                ?>
-                <div id="idiomas">
-                    <form  name="setIdioma" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                        <label for="idiomac">Idioma</label>
-                        <select id="idiomac" name="idiomac" onchange="this.form.submit()">             
-                            <option value="esp" <?php echo ($_COOKIE['idioma']) == 'esp' ? 'selected' : '' ?>>Castellano</option>
-                            <option value="eng" <?php echo ($_COOKIE['idioma']) == 'eng' ? 'selected' : '' ?>>Ingles</option>
-                        </select>
-                    </form>
-                </div>
-                <?php
                 ?>
                 <div class="botones">
                     <form  name="logout" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">

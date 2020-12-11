@@ -5,8 +5,13 @@
  * @since 29/11/2020 1.0:
  */
 session_start();
-if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se logeo anteriormente lo dirigimos al programa
+if (!isset($_COOKIE['idioma'])) {
+    setcookie("idioma", 'esp', time() + (60 * 60 * 24 * 30));
+} else if (isset($_REQUEST['idioma'])) {
+    setcookie('idioma', $_REQUEST['idioma'], time() + (60 * 60 * 24 * 30));
+}
 
+if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se logeo anteriormente lo dirigimos al programa
     require_once 'core/201130libreriaValidacion.php'; //incluimos la libreria de validación
 
     define("OBLIGATORIO", 1); //definimos e inicializamos la constante obligatorio a 1
@@ -22,7 +27,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
         "password" => null
     ];
     if (isset($_REQUEST["entrar"])) {
-        require_once "../config/conexionBDPDO.php"; //incluimos la conexión a la BD
+        require_once "./config/conexionBDPDODesarrollo.php"; //incluimos la conexión a la BD
         $aError["usuario"] = validacionFormularios::comprobarAlfabetico($_REQUEST["usuario"], 15, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo textfieldObligatorio siendo este alfabetico
         $aError['password'] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 1, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo password siendo este alfabetico de tamaño max 8 minimo 1
 
@@ -44,9 +49,6 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
                     $_SESSION['usuarioDAW210DBProyectoTema5'] = $usuarioInsertUsuario; //asignamos el valor del usuario al objero de session
                     if ($oUsuario->T01_NumConexiones == 0) {
                         $_SESSION['FechaHoraUltimaConexionAnterior'] = $oUsuario->T01_FechaHoraUltimaConexion;
-                    }
-                    if (!isset($_COOKIE['idioma'])) {
-                        setcookie('idioma', 'esp');
                     }
                     //Actualizamos la ultima vez que se conecto con timestamp y el número de conexiones que ha echo ese usuario
                     $actualizarLogUsu = "UPDATE T01_Usuario SET T01_FechaHoraUltimaConexion =" . time() . ",T01_NumConexiones =T01_NumConexiones + 1 WHERE T01_CodUsuario=:CodUsuario"; //Creamos la consulta mysq
@@ -75,7 +77,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
                 $entradaOK = false; // asignamos el valor a false en caso de que entre
             }
         }
-    }else {//si el usuario no ha pulsado el boton de enviar
+    } else {//si el usuario no ha pulsado el boton de enviar
         $entradaOK = false; //asignamos el valor a false ya que no se a enviado nada.
     }
     if ($entradaOK) {// si el valor es true entra
@@ -99,6 +101,11 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
                     </div>
                     <div class="nav">
                         <a href="../../proyectoDWES/indexProyectoDWES.html" class="boton volver"><img class="icoBoton" src="../webroot/img/volver-flecha-izquierda.png"><span class="texto">Volver</span></a>
+                        <div id="idiomas">
+                            <a href="login.php?idioma=esp"><img src="webroot/img/esp.jpg"></a>
+                            <a href="login.php?idioma=eng"><img src="webroot/img/eng.svg"></a>
+                            <a href="login.php?idioma=prt"><img src="webroot/img/portu.jpg"></a>
+                        </div>
                     </div>
                 </div>
                 <div id="contenedor"> 
