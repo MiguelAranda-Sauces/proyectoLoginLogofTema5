@@ -16,11 +16,32 @@ if (isset($_REQUEST['close'])) {
     exit;
 }
 require_once "../config/conexionBDPDO.php"; //incluimos la conexión a la BD
+if (isset($_REQUEST['delete'])) {
+    try {
+        $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION); //Creamos el objeto PDO
+        $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "DELETE FROM T01_Usuario WHERE T01_CodUsuario=:codUsuario"; //Creamos la consulta mysql con los parametros bind
+        $deleteUser = $miDB->prepare($sql);
+        $deleteUser->bindParam(":codUsuario", $_SESSION['usuarioDAW210DBProyectoTema5']); //Declaramos el parametro bind
+        $deleteUser->execute();
+        session_destroy();
+        header("Location: ../login.php");
+        exit;
+    } catch (PDOException $miExcepcionPDO) {
+        echo "<p class='error'>Error " . $miExcepcionPDO->getMessage() . "</p>";
+        echo "<p class='error'>Cod.Error " . $miExcepcionPDO->getCode() . "</p>";
+        echo "<h2 class='error'>Error en la conexión con la base de datos</h2>";
+    } finally {
+        unset($miDB); //cerramos la conexión
+    }
+}
+
 try {
     $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION); //Creamos el objeto PDO
     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT T01_DescUsuario,T01_FechaHoraUltimaConexion,T01_NumConexiones FROM T01_Usuario where T01_CodUsuario=:codUsuario"; //Creamos la consulta mysql con los parametros bind
+    $sql = "SELECT T01_DescUsuario,T01_FechaHoraUltimaConexion,T01_NumConexiones FROM T01_Usuario WHERE T01_CodUsuario=:codUsuario"; //Creamos la consulta mysql con los parametros bind
     $consultaDatosUsuario = $miDB->prepare($sql);
     $consultaDatosUsuario->bindParam(":codUsuario", $_SESSION['usuarioDAW210DBProyectoTema5']); //Declaramos el parametro bind
     $consultaDatosUsuario->execute();
@@ -38,7 +59,7 @@ try {
     unset($miDB); //cerramos la conexión
 }
 
-require_once '../core/201130libreriaValidacion.php'; //incluimos la libreria de validación
+require_once '../core/libreriaValidacion.php'; //incluimos la libreria de validación
 
 define("OBLIGATORIO", 1); //definimos e inicializamos la constante obligatorio a 1
 
@@ -142,7 +163,9 @@ if ($entradaOK) {// si el valor es true entra
 
                         </div>
                     </form>
-
+                    <form id="delete" name="logout" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <button class="botonEnvio" type="submit" name='delete' value="delete">Borrar Cuenta</button>
+                    </form>
                 </div>
 
                 <?php

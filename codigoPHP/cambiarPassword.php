@@ -9,8 +9,6 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
     header("Location: ../login.php");
     exit;
 }
-var_dump($_REQUEST);
-var_dump($_SESSION);
 require_once "../config/conexionBDPDO.php"; //incluimos la conexión a la BD
 try {
     $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION); //Creamos el objeto PDO
@@ -32,7 +30,7 @@ try {
     unset($miDB); //cerramos la conexión
 }
 
-require_once '../core/201130libreriaValidacion.php'; //incluimos la libreria de validación
+require_once '../core/libreriaValidacion.php'; //incluimos la libreria de validación
 
 define("OBLIGATORIO", 1); //definimos e inicializamos la constante obligatorio a 1
 define("MAX", 8); //definimos e inicializamos la constante amx a 8

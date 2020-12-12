@@ -12,7 +12,7 @@ if (!isset($_COOKIE['idioma'])) {
 }
 
 if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se logeo anteriormente lo dirigimos al programa
-    require_once 'core/201130libreriaValidacion.php'; //incluimos la libreria de validación
+    require_once 'core/libreriaValidacion.php'; //incluimos la libreria de validación
 
     define("OBLIGATORIO", 1); //definimos e inicializamos la constante obligatorio a 1
 
@@ -27,7 +27,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
         "password" => null
     ];
     if (isset($_REQUEST["entrar"])) {
-        require_once "./config/conexionBDPDODesarrollo.php"; //incluimos la conexión a la BD
+        require_once "./config/conexionBDPDO.php"; //incluimos la conexión a la BD
         $aError["usuario"] = validacionFormularios::comprobarAlfabetico($_REQUEST["usuario"], 15, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo textfieldObligatorio siendo este alfabetico
         $aError['password'] = validacionFormularios::validarPassword($_REQUEST['password'], 8, 1, 1, OBLIGATORIO); //Validamos la entrada del formulario para el campo password siendo este alfabetico de tamaño max 8 minimo 1
 
@@ -103,7 +103,7 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) { //si el usuario se loge
                         <a href="../../proyectoDWES/indexProyectoDWES.html" class="boton volver"><img class="icoBoton" src="../webroot/img/volver-flecha-izquierda.png"><span class="texto">Volver</span></a>
                         <div id="idiomas">
                             <a href="login.php?idioma=esp"><img src="webroot/img/esp.jpg"></a>
-                            <a href="login.php?idioma=eng"><img src="webroot/img/eng.svg"></a>
+                            <a href="login.php?idioma=eng"><img src="webroot/img/eng_.jpg"></a>
                             <a href="login.php?idioma=prt"><img src="webroot/img/portu.jpg"></a>
                         </div>
                     </div>

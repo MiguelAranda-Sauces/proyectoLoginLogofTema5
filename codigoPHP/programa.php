@@ -5,6 +5,17 @@ if (!isset($_SESSION['usuarioDAW210DBProyectoTema5'])) {
     exit;
 }
 
+/*if (isset($_REQUEST['idiomac']) && $_REQUEST['idiomac'] =='eng') {
+    setcookie('idioma', 'eng');
+    header("Location: programaEng.php");
+    exit;
+}
+
+if ($_COOKIE['idioma'] == 'eng') {
+    header("Location: programaEng.php");
+    exit;
+}*/
+
 if (isset($_POST['close'])) {
     session_destroy();
     header("Location: ../login.php");
@@ -37,7 +48,7 @@ $saludo = [
         </div>
         <div id="contenedor"> 
             <?php
-            require_once "../config/conexionBDPDODesarrollo.php";
+            require_once "../config/conexionBDPDO.php";
             try {
                 $miDB = new PDO(DNS, USER, PASSWORD, CODIFICACION);
                 $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
